@@ -24,19 +24,19 @@ class Item{
 }
 
 //Matriz de inventario. 4 filas y 9 columnas. Creacion de objetos y asignación a la matriz.
-let inventario = new Array(4).fill().map(x => new Array(9).fill(0));
+let inventario = Array(4).fill().map(x =>Array(9).fill());
 
-let Piedra = new Item("Piedra", "Una piedra.", 10, 64);
-let Manzana = new Item("Manzana", "Una manzana.", 16, 64);
-let Antorcha = new Item("Antorcha", "Una antorcha.", 32, 64);
-let EspadaDeDiamante = new Item("Espada de diamante", "Una espada de diamante.", 1, 1);
-let PicoDeHierro = new Item("Pico de hierro", "Un pico de hierro.", 1, 1);
+let piedra = new Item("Piedra", "Una piedra.", 10, 64);
+let manzana = new Item("Manzana", "Una manzana.", 16, 64);
+let antorcha = new Item("Antorcha", "Una antorcha.", 32, 64);
+let espadaDeDiamante = new Item("Espada de diamante", "Una espada de diamante.", 1, 1);
+let picoDeHierro = new Item("Pico de hierro", "Un pico de hierro.", 1, 1);
 
-inventario[0][0] = EspadaDeDiamante;
-inventario[0][1] = PicoDeHierro;
-inventario[0][2] = Antorcha;
-inventario[0][3] = Manzana;
-inventario[0][4] = Piedra;
+inventario[0][0] = espadaDeDiamante;
+inventario[0][1] = picoDeHierro;
+inventario[0][2] = antorcha;
+inventario[0][3] = manzana;
+inventario[0][4] = piedra;
 
 //Funciones
 
@@ -48,7 +48,11 @@ function showInventory(){
     for (let i = 0; i < inventario.length; i++) {
         let fila = "[";
         for (let j = 0; j < inventario[i].length; j++) {
-            fila += inventario[i][j] + (j < inventario[i].length - 1 ? ", " : "");
+            if (inventario[i][j] === undefined) {
+                fila += "VACIO" + (j < inventario[i].length - 1 ? ", " : ""); // Comprobacion ultimo elemento
+            } else {
+                fila += inventario[i][j].name +"("+inventario[i][j].quantity+")" + (j < inventario[i].length - 1 ? ", " : "");
+            }
         }
         fila += "]";
         console.log(fila);
