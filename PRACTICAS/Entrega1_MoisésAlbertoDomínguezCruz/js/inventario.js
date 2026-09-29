@@ -67,10 +67,11 @@ function showQuickAccessBar(){
     console.log("========================");
 
     inventario[0].forEach((item, index) => {
-        if(item !== 0){
-            console.log("Objeto " + (index + 1) + ": " + item.name + " - Cantidad: " + item.quantity);
-        } else {
+        if(item === undefined){
             console.log("Objeto " + (index + 1) + ": Vacío");
+        } else {
+            
+            console.log("Objeto " + (index + 1) + ": " + item.name + " - Cantidad: " + item.quantity);
         }
     });
 }
