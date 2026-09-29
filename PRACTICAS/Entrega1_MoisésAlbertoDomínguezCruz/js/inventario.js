@@ -67,13 +67,33 @@ function showQuickAccessBar(){
     console.log("========================");
 
     inventario[0].forEach((item, index) => {
-        if(item === undefined){
+        if(item === undefined){ // Comprobacion si el objeto es undefined, al preguntar si el item es distinto a undefined,
+                                // el programa no entra en el if y lanza un error al intentar acceder a la propiedad name de un objeto undefined.
             console.log("Objeto " + (index + 1) + ": Vacío");
         } else {
             
             console.log("Objeto " + (index + 1) + ": " + item.name + " - Cantidad: " + item.quantity);
         }
     });
+}
+
+//Buscar un objeto. Busca un objeto por su nombre en el inventario y muestra si está en la matriz.
+function searchItem(name){
+    let encontrado = false;
+
+    for (let i = 0; i < inventario.length; i++) {
+        for (let j = 0; j < inventario[i].length; j++) {
+            if (inventario[i][j] !== undefined && inventario[i][j].name.toLowerCase() === name.toLowerCase()) {
+                console.log("Item encontrado: [" + i + "][" + j + "]");
+                encontrado = true; // Uso de una flag para indicar que se encontró el objeto y evitar seguir buscando.
+                break;
+            }
+        }
+    }
+
+    if (!encontrado) {
+        console.log("Item no encontrado en el inventario.");
+    }
 }
 
 
@@ -101,6 +121,10 @@ do{
         case "2":
             showQuickAccessBar();
             break;
+        case "3":
+            let nombre = prompt("Introduce el nombre del objeto a buscar: ");
+            searchItem(nombre);
+            break;    
             
         default:
             console.log("Opción no válida");
