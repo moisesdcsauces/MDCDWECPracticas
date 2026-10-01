@@ -96,6 +96,21 @@ function searchItem(name){
     }
 }
 
+//Añadir un objeto al inventario. Añade un objeto a la primera posición libre del inventario, si no hay huecos libres, muestra un mensaje.
+function addItem(item){
+    let added = false;
+    let cantidadTotal = 0;
+    let cantidadRestante = item.quantity;
+
+    // Contar la cantidad total del mismo objeto en el inventario
+    for (let i = 0; i < inventario.length; i++) {
+        for (let j = 0; j < inventario[i].length; j++) {
+            if (inventario[i][j] !== undefined && inventario[i][j].name === item.name) {
+                cantidadTotal += inventario[i][j].quantity;
+            }
+        }
+    }
+}
 
 //Menu de opciones.
 do{
@@ -125,7 +140,14 @@ do{
             let nombre = prompt("Introduce el nombre del objeto a buscar: ");
             searchItem(nombre);
             break;    
-            
+        case "4":
+            let nombreItem = prompt("Introduce el nombre del objeto a añadir: ");
+            let descripcionItem = prompt("Introduce la descripción del objeto a añadir: ");
+            let cantidadItem = parseInt(prompt("Introduce la cantidad del objeto a añadir: "));
+            let maxStackItem = parseInt(prompt("Introduce el máximo por objeto del objeto a añadir: "));
+            let item = { name: nombreItem, description: descripcionItem, quantity: cantidadItem, maxStack: maxStackItem };
+            addItem(item);
+        
         default:
             console.log("Opción no válida");
         break;
