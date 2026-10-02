@@ -114,7 +114,7 @@ function addItem(item){
     // Comprobar si se puede añadir el objeto sin superar el máximo por objeto
     if (cantidadTotal + item.quantity <= item.maxStack) {
         
-
+    }
 }
 
 
