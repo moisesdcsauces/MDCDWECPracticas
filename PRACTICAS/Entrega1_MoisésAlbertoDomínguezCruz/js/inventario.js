@@ -110,7 +110,13 @@ function addItem(item){
             }
         }
     }
+    
+    // Comprobar si se puede añadir el objeto sin superar el máximo por objeto
+    if (cantidadTotal + item.quantity <= item.maxStack) {
+        
+
 }
+
 
 //Menu de opciones.
 do{
@@ -145,9 +151,16 @@ do{
             let descripcionItem = prompt("Introduce la descripción del objeto a añadir: ");
             let cantidadItem = parseInt(prompt("Introduce la cantidad del objeto a añadir: "));
             let maxStackItem = parseInt(prompt("Introduce el máximo por objeto del objeto a añadir: "));
-            let item = { name: nombreItem, description: descripcionItem, quantity: cantidadItem, maxStack: maxStackItem };
-            addItem(item);
-        
+            let itemNuevo = { name: nombreItem, description: descripcionItem, quantity: cantidadItem, maxStack: maxStackItem };
+            addItem(itemNuevo);
+        case "5":
+            break;
+        case "6":
+            break;
+        case "7":
+            break;
+        case "8":
+            break;
         default:
             console.log("Opción no válida");
         break;
