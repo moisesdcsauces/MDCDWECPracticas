@@ -111,9 +111,18 @@ function addItem(item){
         }
     }
     
-    // Comprobar si se puede añadir el objeto sin superar el máximo por objeto
+    // Comprobador si se puede añadir el objeto sin superar el máximo por objeto
     if (cantidadTotal + item.quantity <= item.maxStack) {
-        
+        for (let i = 0; i < inventario.length; i++) {
+            for (let j = 0; j < inventario[i].length; j++) {
+                if (inventario[i][j] === undefined) {
+                    inventario[i][j] = item;
+                    added = true;
+                    console.log("Item añadido al inventario en la posicion [" + i + "][" + j + "]");
+                    return; // Salir de la función después de añadir el objeto
+                }
+            }
+        }
     }
 }
 
