@@ -1,8 +1,8 @@
 //Clase Item.
 class Item{
     constructor(name, description, quantity, maxStack){
-        this.name = name;
-        this.description = description;
+        this.name = name.toLowerCase();
+        this.description = description.toLowerCase();
         this._quantity = quantity;
         this.maxStack = maxStack;
     }
@@ -20,6 +20,12 @@ class Item{
         console.log("Descripcion: " + this.description);
         console.log("Cantidad: " + this.quantity);
         console.log("Máximo por objeto: " + this.maxStack);
+    }
+
+    compareTo(item){
+        if(this.constructor === item.constructor){
+            return this.name === item.name;
+        } else return false;
     }
 }
 
@@ -83,7 +89,7 @@ function searchItem(name){
 
     for (let i = 0; i < inventario.length; i++) {
         for (let j = 0; j < inventario[i].length; j++) {
-            if (inventario[i][j] !== undefined && inventario[i][j].name.toLowerCase() === name.toLowerCase()) {
+            if (inventario[i][j] !== undefined && inventario[i][j].name === name.toLowerCase()) {
                 console.log("Item encontrado: [" + i + "][" + j + "]");
                 encontrado = true; // Uso de una flag para indicar que se encontró el objeto y evitar seguir buscando.
                 break;
@@ -98,31 +104,49 @@ function searchItem(name){
 
 //Añadir un objeto al inventario. Añade un objeto a la primera posición libre del inventario, si no hay huecos libres, muestra un mensaje.
 function addItem(item){
-    let added = false;
-    let cantidadTotal = 0;
-    let cantidadRestante = item.quantity;
+    let cantidadRestante = item.quantity; // Cantidad restante del objeto a añadir.
 
-    // Contar la cantidad total del mismo objeto en el inventario
-    for (let i = 0; i < inventario.length; i++) {
-        for (let j = 0; j < inventario[i].length; j++) {
-            if (inventario[i][j] !== undefined && inventario[i][j].name === item.name) {
-                cantidadTotal += inventario[i][j].quantity;
-            }
-        }
-    }
-    
-    // Comprobador si se puede añadir el objeto sin superar el máximo por objeto
-    if (cantidadTotal + item.quantity <= item.maxStack) {
-        for (let i = 0; i < inventario.length; i++) {
-            for (let j = 0; j < inventario[i].length; j++) {
-                if (inventario[i][j] === undefined) {
-                    inventario[i][j] = item;
-                    added = true;
-                    console.log("Item añadido al inventario en la posicion [" + i + "][" + j + "]");
-                    return; // Salir de la función después de añadir el objeto
+    //Buscar huecos libres en el inventario.
+    for(let i = 0;i<inventario.length;i++){
+        for(let j = 0;j<inventario[i].length;j++){
+            let slot = inventario[i][j];
+
+            if(slot!== undefined && slot.name === item.name){ // Si el slot no es undefined y el nombre del objeto es igual al del slot, se puede mezclar.
+                let espacioDisponible = slot.maxStack - slot.quantity; // Espacio disponible en el slot.
+                let cantidadAAgregar = Math.min(cantidadRestante, espacioDisponible); // Cantidad a agregar al slot.
+
+                slot.quantity += cantidadAAgregar;
+                cantidadRestante -= cantidadAAgregar;
+
+                console.log("Se han añadido " + cantidadAAgregar + " unidades de " + item.name + " al slot [" + i + "][" + j + "].");
+
+                if(cantidadRestante <= 0){ // Si no queda cantidad restante, se sale.
+                    return;
                 }
             }
         }
+    }
+
+    //Si queda cantidad restante, busca huecos libres en el inventario.
+    for(let i = 0;i<inventario.length;i++){
+        for(let j = 0;j<inventario[i].length;j++){
+            if(inventario[i][j] === undefined){ // Si el slot es undefined, se puede añadir el objeto.
+                let cantidadEnEsteSlot = Math.min(cantidadRestante, item.maxStack); 
+                inventario[i][j] = { ...item, quantity: cantidadEnEsteSlot }; // Nuevo objeto con la cantidad a añadir.
+
+                cantidadRestante -= cantidadEnEsteSlot;
+
+                console.log("Se han añadido " + cantidadEnEsteSlot + " unidades de " + item.name + " al slot [" + i + "][" + j + "].");
+
+                if(cantidadRestante === 0){ // Si no queda cantidad restante, se sale.
+                    return;
+                }
+            }
+        }
+    }
+
+    if(cantidadRestante > 0){ // Si queda cantidad restante, significa que no hay huecos libres.
+        console.log("No hay suficiente espacio en el inventario para añadir " + cantidadRestante + " unidades de " + item.name + ".");
     }
 }
 
@@ -160,8 +184,9 @@ do{
             let descripcionItem = prompt("Introduce la descripción del objeto a añadir: ");
             let cantidadItem = parseInt(prompt("Introduce la cantidad del objeto a añadir: "));
             let maxStackItem = parseInt(prompt("Introduce el máximo por objeto del objeto a añadir: "));
-            let itemNuevo = { name: nombreItem, description: descripcionItem, quantity: cantidadItem, maxStack: maxStackItem };
+            let itemNuevo = { name: nombreItem.toLowerCase(), description: descripcionItem.toLowerCase(), quantity: cantidadItem, maxStack: maxStackItem };
             addItem(itemNuevo);
+            break;
         case "5":
             break;
         case "6":
