@@ -150,6 +150,17 @@ function addItem(item){
     }
 }
 
+// Mover un objeto. Mueve un objeto de una posición a otra en el inventario, si la posición de destino está ocupada, se intercambian los objetos.
+
+
+// Eliminar un objeto. Elimina un objeto de una posición en el inventario, si la posición está vacía, muestra un mensaje.
+
+
+// Mostrar huecos libres. Muestra las posiciones vacías del inventario.
+
+
+// Mostrar objeto mas abundante. Muestra el objeto con la mayor cantidad en el inventario.
+
 
 //Menu de opciones.
 do{
