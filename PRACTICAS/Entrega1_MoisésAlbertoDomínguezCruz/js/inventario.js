@@ -151,7 +151,37 @@ function addItem(item){
 }
 
 // Mover un objeto. Mueve un objeto de una posición a otra en el inventario, si la posición de destino está ocupada, se intercambian los objetos.
+function moveItem(){
+    let posicionOrigen = prompt("Introduce la posición de origen (fila,columna): ");
+    let posicionDestino = prompt("Introduce la posición de destino (fila,columna): ");
 
+    let [filaOrigen, columnaOrigen] = posicionOrigen.split(",").map(Number); // Convertir a numeros
+    let [filaDestino, columnaDestino] = posicionDestino.split(",").map(Number); // Convertir a numeros
+
+    if (inventario[filaOrigen][columnaOrigen] === undefined){
+        alert("No hay ningún objeto en la posición de origen.");
+        return;
+    }
+
+    //Si el destino está vacio, se mueve el objeto
+    if(inventario[filaDestino][columnaDestino] === undefined){
+        inventario[filaDestino][columnaDestino] = inventario[filaOrigen][columnaOrigen];
+        inventario[filaOrigen][columnaOrigen] = undefined;
+        console.log("Objeto movido de [" + filaOrigen + "][" + columnaOrigen + "] a [" + filaDestino + "][" + columnaDestino + "].");
+    }else{
+        // Sino se intercambian los objetos.
+        let objetoTemporal = inventario[filaDestino][columnaDestino];
+        
+        inventario[filaDestino][columnaDestino] = inventario[filaOrigen][columnaOrigen];
+        inventario[filaOrigen][columnaOrigen] = objetoTemporal;
+        
+        console.log("Objetos intercambiados entre [" + filaOrigen + "][" + columnaOrigen + "] y [" + filaDestino + "][" + columnaDestino + "].");
+    }
+
+    console.log("Movimiento de objetos completado.");
+
+    console.table(inventario);
+}
 
 // Eliminar un objeto. Elimina un objeto de una posición en el inventario, si la posición está vacía, muestra un mensaje.
 
@@ -199,6 +229,7 @@ do{
             addItem(itemNuevo);
             break;
         case "5":
+            moveItem();
             break;
         case "6":
             break;
