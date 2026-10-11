@@ -213,7 +213,21 @@ function deleteItem(){
 }
 
 // Mostrar huecos libres. Muestra las posiciones vacías del inventario.
+function countFreeSpaces(){
+    let contador = 0;
 
+    // Recorrido del inventario. Si es undefined, los muestra y cuenta ese hueco al contador. Luego se muestra el numero de de huecos. 
+    // La parte de la barra de acceso rapido solo se me ocurrio contarla tambien con los huecos libres de todo el inventario.
+    for (let i = 0; i < inventario.length; i++) {
+        for (let j = 0; j < inventario[i].length; j++) {
+            if (inventario[i][j] === undefined) {
+                console.log("Huecos libres en la posicion [" + i + "][" + j + "].");
+                contador++;
+            }
+        }
+    }
+    console.log("Huecos libres: " + contador);
+}
 
 // Mostrar objeto mas abundante. Muestra el objeto con la mayor cantidad en el inventario.
 
