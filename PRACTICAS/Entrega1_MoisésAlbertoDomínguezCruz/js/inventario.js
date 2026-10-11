@@ -87,6 +87,7 @@ function showQuickAccessBar(){
 function searchItem(name){
     let encontrado = false;
 
+    // Recorro el inventario para encontrar el objeto por su nombre.
     for (let i = 0; i < inventario.length; i++) {
         for (let j = 0; j < inventario[i].length; j++) {
             if (inventario[i][j] !== undefined && inventario[i][j].name === name.toLowerCase()) {
@@ -184,7 +185,32 @@ function moveItem(){
 }
 
 // Eliminar un objeto. Elimina un objeto de una posición en el inventario, si la posición está vacía, muestra un mensaje.
+function deleteItem(){
+    let posicion = prompt("Introduce la posicion del objeto a eliminar (fila,columna): ");
+    let [fila, columna] = posicion.split(",").map(Number);
 
+    // Recorro el inventario para encontrar la posicion y eliminar el objeto.
+    for (let i = 0; i < inventario.length; i++) {
+        for (let j = 0; j < inventario[i].length; j++) {
+            // Si coincide entra y pregunta si quiere eliminar el objeto mediante un prompt.
+            if (i === fila && j === columna) {
+                if (inventario[i][j] !== undefined) {
+                    console.log("¿Seguro de que quieres eliminar el objeto " + inventario[i][j].name + " en la posicion [" + i + "][" + j + "]? (s/n)");
+                    let confirmacion = prompt("Confirma la eliminación (s/n): ");
+                    confirmacion = confirmacion.toLowerCase();
+                    if (confirmacion === "s") {
+                        inventario[i][j] = undefined;
+                        console.log("Objeto eliminado de la posicion [" + i + "][" + j + "].");
+                    } else {
+                        console.log("Eliminación cancelada.");
+                    }
+                } else {
+                    console.log("No hay ningun objeto en la posicion [" + i + "][" + j + "].");
+                }
+            }
+        }
+    }                    
+}
 
 // Mostrar huecos libres. Muestra las posiciones vacías del inventario.
 
@@ -232,10 +258,13 @@ do{
             moveItem();
             break;
         case "6":
+            deleteItem();
             break;
         case "7":
+            countFreeSpaces();
             break;
         case "8":
+            getMostQuantityStack();
             break;
         default:
             console.log("Opción no válida");
