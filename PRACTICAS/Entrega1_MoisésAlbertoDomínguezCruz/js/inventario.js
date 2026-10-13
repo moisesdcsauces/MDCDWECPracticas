@@ -323,6 +323,13 @@ function countFreeSpaces() {
 }
 
 // Mostrar objeto mas abundante. Muestra el objeto con la mayor cantidad en el inventario.
+// 1. Si contiene un item recorrer toda la matriz y sumar cantidades del mismo item.
+// 2. Comprobar si la cantidad total del item es mayor a la ultima capacidad guardada.
+    // 2.1 Guardar en lastMaxQuantity la cantidad total.
+    // 2.2 Guardar en nameItemMaxQuantity el nombre del item.
+// 3. Comprobar si la cantidad total del item es mayor a la ultima cantidad guardada.
+    // 3.1 Guardar en lastMaxQuantity la cantidad total.
+    // 3.2 Guardar en nameItemMaxQuantity el nombre del item.
 function getMostQuantityStack() {
   let maxQuantity = 0;
   let itemMax = null;
