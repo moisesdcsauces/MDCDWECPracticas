@@ -3,10 +3,16 @@ const DOM_INPUT_PRICE = document.getElementById("precio");
 const DOM_INPUT_QUANTITY = document.getElementById("cantidad");
 const DOM_RESUME = document.getElementById("resumen");
 
-let total = DOM_INPUT_PRICE.value * DOM_INPUT_QUANTITY.value;
+const nombre = DOM_INPUT_NAME.value.trim();
+const precioTexto = DOM_INPUT_PRICE.value.trim();
+const cantidadTexto = DOM_INPUT_QUANTITY.value.trim();
 
-console.log("Cantidad total: "+total.toFixed(2));
+const precio = Number(precioTexto);
+const cantidad = Number(cantidadTexto);
 
-if(DOM_INPUT_NAME == null || DOM_INPUT_PRICE != Number || DOM_INPUT_QUANTITY>0){
-    
+if (nombre === "" || precioTexto === "" || cantidadTexto === "" || Number.isNaN(precio) || precio < 0 || Number.isNaN(cantidad) || cantidad <= 0 || !Number.isInteger(cantidad)) {
+    DOM_RESUME.textContent = "Error: Revisa los datos. El nombre no puede estar vacío, el precio debe ser un número positivo y la cantidad un entero mayor que 0.";
+} else {
+    const total = precio * cantidad;
+    DOM_RESUME.textContent = "Pedido: " + cantidad + " x " + nombre + " (" + precio.toFixed(2) + " €) — Total: " + total.toFixed(2) + " €";
 }
