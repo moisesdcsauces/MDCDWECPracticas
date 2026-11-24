@@ -1,0 +1,15 @@
+.aviso{
+    padding: 12px;
+}
+
+.oculto{
+    display: none;
+}
+
+.error{
+    color: pink;
+}
+
+.correcto{
+    background-color: lightgreen;
+}
